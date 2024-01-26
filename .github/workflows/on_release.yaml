@@ -24,6 +24,6 @@ jobs:
             audio,
             suits,
             emotes,
-            server-side,
-            client-side,
+            serverside,
+            clientside,
             misc
