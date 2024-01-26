@@ -1,0 +1,29 @@
+name: Publish Mod
+
+on: 
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: GreenTF/upload-thunderstore-package@v4.2
+        with:
+          namespace: PapayaMods # the thunderstore 'team' to publish under
+          description: Just a Lethal Company modpack
+          token: ${{ secrets.THUNDERSTORE_API_TOKEN }}
+          name: LethalLuna # the name of the package
+          version: ${{ github.ref_name }} # Use the tag as the package version
+          community: lethal-company
+          repo: northstar.thunderstore.io
+          categories: | # <-- notice this pipe character
+            modpacks,
+            tools,
+            audio,
+            suits,
+            emotes,
+            server-side,
+            client-side,
+            misc
