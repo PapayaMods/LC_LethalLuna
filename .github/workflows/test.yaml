@@ -24,7 +24,7 @@ jobs:
           path: ${{ env.BUILD_DIR }}
 
       - name: Unzip modpack
-        run: unzip ${{ env.BUILD_PKG }} -d ${{ UNZIPPED_DIR }}
+        run: unzip ${{ env.BUILD_PKG }} -d ${{ env.UNZIPPED_DIR }}
 
       - name: Simple JSON validation
         run: jq '.' ${{ env.UNZIPPED_DIR }}/manifest.json
