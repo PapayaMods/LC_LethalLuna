@@ -1,6 +1,6 @@
 {
     "name": "LethalLuna",
-    "version_number": "0.0.2",
+    "version_number": "0.0.3",
     "website_url": "https://github.com/majabojarska/LethalLuna",
     "description": "So Long, and Thanks for All the Fish",
     "dependencies": [
@@ -33,6 +33,8 @@
         "Norman-GlowStickSuits-1.0.4",
         "yeahimliam-Peter_Griffin_Suit-1.0.1",
         "GorillaBeast-WalterWhite-1.0.0",
-        "DiaryOfTruth-Silly_Little_Company_Suits-4.2.0"
+        "DiaryOfTruth-Silly_Little_Company_Suits-4.2.0",
+        "AlexCodesGames-AdditionalSuits-2.0.0",
+        "quackandcheese-MirrorDecor-1.3.1"
     ]
 }
