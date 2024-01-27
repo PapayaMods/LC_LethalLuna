@@ -1,6 +1,6 @@
 name: Publish Mod
 
-on: 
+on:
   release:
     types: [published]
 
@@ -8,8 +8,25 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: GreenTF/upload-thunderstore-package@v4.2
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Template manifest.json
+        uses: cuchi/jinja2-action@v1.2.2
+        with:
+          template: manifest.json.j2
+          output_file: manifest.json
+          strict: true
+          variables: |
+            name=${{ github.event.repository.name }}
+            version_number=${{ github.ref_name }}
+            website_url=${{ github.server_url }}/${{ github.repository }}
+
+      - name: Print manifest.json
+        run: cat manifest.json
+
+      - name: Upload Thunderstore package
+        uses: GreenTF/upload-thunderstore-package@v4.2
         with:
           namespace: PapayaMods # the thunderstore 'team' to publish under
           description: Just a Lethal Company modpack
