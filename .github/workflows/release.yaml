@@ -30,7 +30,7 @@ jobs:
           description: Just a Lethal Company modpack
           file: ${{ env.BUILD_PKG }}
           token: ${{ secrets.THUNDERSTORE_PROD_API_TOKEN }}
-          name: ${{ env.name }} # the name of the package
+          name: ${{ github.event.repository.name }} # the name of the package
           version: ${{ github.ref_name }} # Use the tag as the package version
           community: lethal-company
           repo: northstar.thunderstore.io
