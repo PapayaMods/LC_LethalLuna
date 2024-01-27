@@ -1,0 +1,36 @@
+name: Validate JSONs
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Validate manifest JSON
+    steps:
+      - name: Set env
+        run: |
+          echo "BUILD_DIR=build" >> $GITHUB_ENV
+          echo "BUILD_PKG=build/modpack.zip" >> $GITHUB_ENV
+          echo "UNZIPPED_DIR=unzipped" >> $GITHUB_ENV
+
+      - name: Create unzip destination directory
+        run: mkdir -p ${{ env.UNZIPPED_DIR }}
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: package
+          path: ${{ env.BUILD_DIR }}
+
+      - name: Unzip modpack
+        run: unzip ${{ env.BUILD_PKG }} -d ${{ UNZIPPED_DIR }}
+
+      - name: Simple JSON validation
+        run: jq '.' ${{ env.UNZIPPED_DIR }}/manifest.json
+
+      - name: Check presence of icon.png
+        run: test -f ${{ env.UNZIPPED_DIR }}/icon.png
+
+      - name: Check presence of README.md
+        run: test -f ${{ env.UNZIPPED_DIR }}/README.md

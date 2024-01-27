@@ -1,0 +1,11 @@
+name: Status
+
+on:
+  push:
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yaml
+  publish:
+    uses: ./.github/workflows/test.yaml
+    needs: [build]
