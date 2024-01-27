@@ -1,0 +1,45 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yaml
+  publish:
+    name: Publish
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set env
+        run: |
+          echo "BUILD_DIR=build" >> $GITHUB_ENV
+          echo "BUILD_PKG=build/modpack.zip" >> $GITHUB_ENV
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: package
+          path: ${{ env.BUILD_DIR }}
+
+      - name: Upload Thunderstore package
+        uses: GreenTF/upload-thunderstore-package@v4.3
+        with:
+          namespace: PapayaMods # the thunderstore 'team' to publish under
+          description: Just a Lethal Company modpack
+          file: ${{ env.BUILD_PKG }}
+          token: ${{ secrets.THUNDERSTORE_PROD_API_TOKEN }}
+          name: ${{ env.name }} # the name of the package
+          version: ${{ github.ref_name }} # Use the tag as the package version
+          community: lethal-company
+          repo: northstar.thunderstore.io
+          categories: | # <-- notice this pipe character
+            modpacks,
+            tools,
+            audio,
+            suits,
+            emotes,
+            serverside,
+            clientside,
+            misc

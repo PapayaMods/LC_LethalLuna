@@ -1,0 +1,46 @@
+name: Build
+
+on: push
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set env
+        run: |
+          echo "BUILD_SRC=build/src" >> $GITHUB_ENV
+          echo "BUILD_PKG=build/modpack.zip" >> $GITHUB_ENV
+
+      - name: Create build directory structure
+        run: mkdir -p ${{ env.BUILD_SRC }}
+
+      - name: Template manifest.json
+        uses: cuchi/jinja2-action@v1.2.2
+        with:
+          template: manifest.json.j2
+          output_file: ${{ env.BUILD_SRC }}/manifest.json
+          strict: true
+          variables: |
+            name=${{ github.event.repository.name }}
+            version_number=${{ github.ref_name }}
+            website_url=${{ github.server_url }}/${{ github.repository }}
+
+      - name: Copy sources
+        run: |
+          cp icon.png ${{ env.BUILD_SRC }}
+          cp README.md ${{ env.BUILD_SRC }}
+
+      - name: Build deliverable
+        run: zip -j -r ${{ env.BUILD_PKG }} ${{ env.BUILD_SRC }}/*
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: ${{ env.BUILD_PKG }}
+          if-no-files-found: error
+          overwrite: false
