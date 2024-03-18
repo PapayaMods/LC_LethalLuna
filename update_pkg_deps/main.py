@@ -89,12 +89,20 @@ def get_arg_parser() -> argparse.ArgumentParser:
         "--input",
         help="Path to package manifest to update dependencies for.",
         required=True,
+        type=str,
     )
     parser.add_argument(
         "-o",
         "--output",
         help="Output path for updated package manifest.",
         required=True,
+        type=str,
+    )
+    parser.add_argument(
+        "--max-workers",
+        help="Maximum number of API workers",
+        type=int,
+        default=_DEFAULT_MAX_WORKERS,
     )
     parser.add_argument("-v", "--verbose", help="Verbose mode.", action="store_true")
 
@@ -107,13 +115,13 @@ def main():
     log_level = logging.DEBUG if args.verbose else logging.INFO
     logging.basicConfig(level=log_level)
 
-    path_in = Path(args.input)
     path_out = Path(args.output)
+    path_in = Path(args.input)
 
     logger.debug("CLI args=%s", args)
 
     manifest_orig = json.loads(path_in.read_text(encoding=_ENCODING))
-    manifest_updated = update_manifest_deps(manifest_orig)
+    manifest_updated = update_manifest_deps(manifest_orig, max_workers=args.max_workers)
 
     path_out.write_text(json.dumps(manifest_updated, indent=4), encoding=_ENCODING)
 
