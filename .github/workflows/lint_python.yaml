@@ -7,10 +7,9 @@ on:
 
 jobs:
   lint_and_fix:
-    runs-on: ubuntu-latest
+    runs-on: python:3.12
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v2
       - uses: chartboost/ruff-action@v1
         with:
           args: --check .
