@@ -110,7 +110,7 @@ def get_arg_parser() -> argparse.ArgumentParser:
 
 def main():
     args = get_arg_parser().parse_args()
-
+    bork
     log_level = logging.DEBUG if args.verbose else logging.INFO
     logging.basicConfig(level=log_level)
     logger.info("Log level set to %s", log_level)
