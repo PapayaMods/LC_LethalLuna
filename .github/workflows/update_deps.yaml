@@ -18,7 +18,7 @@ jobs:
         run: pip install ./update_pkg_deps
 
       - name: Update modpack dependencies
-        run: update_pkg_deps --input manifest.json.j2 --output manifest.json.j2
+        run: update_pkg_deps --input manifest.json.j2 --output manifest.json.j2 --verbose
 
       - name: Calculate diff
         id: git-diff
