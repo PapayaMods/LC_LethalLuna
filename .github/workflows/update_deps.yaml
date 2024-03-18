@@ -26,7 +26,6 @@ jobs:
           cat manifest.json.j2
 
       - name: Create pull request
-        if: steps.git-diff.outputs-diff
         uses: peter-evans/create-pull-request@v6
         with:
           branch: update-dependencies
