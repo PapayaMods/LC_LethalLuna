@@ -82,7 +82,6 @@ def get_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="update_pkg_deps",
         description="Updates dependencies to the latest version for the provided package manifest.",
-        epilog="So long and thanks for all the fish.",
     )
     parser.add_argument(
         "-i",
