@@ -1,0 +1,10 @@
+[project]
+name = "update_pkg_deps"
+version = "0.0.1"
+dependencies = [
+    "requests~=2.31.0",
+    'importlib-metadata; python_version~="3.11"',
+]
+
+[project.scripts]
+update_pkg_deps = "main:main"
