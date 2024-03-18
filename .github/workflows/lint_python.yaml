@@ -1,12 +1,12 @@
-name: Python lint and fix
+name: Lint Python
 
 on:
   push:
-    # paths:
-    #   - "update_pkg_deps/**"
+    paths:
+      - "update_pkg_deps/**"
 
 jobs:
-  lint_and_fix:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,6 +14,3 @@ jobs:
       - uses: chartboost/ruff-action@v1
         with:
           config: .ruff.toml
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "style fixes by ruff"
