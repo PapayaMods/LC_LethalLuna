@@ -114,15 +114,18 @@ def main():
 
     log_level = logging.DEBUG if args.verbose else logging.INFO
     logging.basicConfig(level=log_level)
+    logger.info("Log level set to %s", log_level)
 
     path_out = Path(args.output)
     path_in = Path(args.input)
 
-    logger.debug("CLI args=%s", args)
-
+    logger.info("Loading package manifest: %s", path_in)
     manifest_orig = json.loads(path_in.read_text(encoding=_ENCODING))
+
+    logger.info("Updating package manifest...")
     manifest_updated = update_manifest_deps(manifest_orig, max_workers=args.max_workers)
 
+    logger.info("Writing package manifest: %s", path_out)
     path_out.write_text(json.dumps(manifest_updated, indent=4), encoding=_ENCODING)
 
 
