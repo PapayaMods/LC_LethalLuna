@@ -73,7 +73,7 @@ def update_manifest_deps(
                     f"Failed to get latest version for package {pkg=}"
                 ) from err
 
-    manifest["dependencies"] = [str(pkg) for pkg in deps_latest]
+    manifest["dependencies"] = sorted([str(pkg) for pkg in deps_latest])
 
     return manifest
 
