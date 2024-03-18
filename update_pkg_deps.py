@@ -74,6 +74,7 @@ def get_arg_parser() -> argparse.ArgumentParser:
 def update_manifest_deps(
     manifest: Mapping, max_workers: int = _DEFAULT_MAX_WORKERS
 ) -> Mapping:
+    """Updates the provided package's manifest dependencies to the latest versions."""
     manifest = deepcopy(manifest)
     deps_orig: Sequence[Package] = [
         Package.from_str(elem) for elem in manifest["dependencies"]
