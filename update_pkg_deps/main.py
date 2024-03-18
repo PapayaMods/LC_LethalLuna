@@ -1,7 +1,3 @@
-"""
-Updates dependencies to the latest version for the provided package manifest.
-"""
-
 import argparse
 import concurrent.futures
 import json
@@ -56,23 +52,6 @@ class Package:
         return pkg
 
 
-def get_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        prog="ProgramName",
-        description="What the program does",
-        epilog="Text at the bottom of help",
-    )
-    parser.add_argument(
-        "-i", "--input", help="Path to package manifest to update dependencies for."
-    )
-    parser.add_argument(
-        "-o", "--output", help="Output path for updated package manifest."
-    )
-    parser.add_argument("-v", "--verbose", help="Verbose mode.", action="store_true")
-
-    return parser
-
-
 def update_manifest_deps(
     manifest: Mapping, max_workers: int = _DEFAULT_MAX_WORKERS
 ) -> Mapping:
@@ -99,6 +78,29 @@ def update_manifest_deps(
     return manifest
 
 
+def get_arg_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="update_pkg_deps",
+        description="Updates dependencies to the latest version for the provided package manifest.",
+        epilog="So long and thanks for all the fish.",
+    )
+    parser.add_argument(
+        "-i",
+        "--input",
+        help="Path to package manifest to update dependencies for.",
+        required=True,
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        help="Output path for updated package manifest.",
+        required=True,
+    )
+    parser.add_argument("-v", "--verbose", help="Verbose mode.", action="store_true")
+
+    return parser
+
+
 def main():
     args = get_arg_parser().parse_args()
 
@@ -113,9 +115,7 @@ def main():
     manifest_orig = json.loads(path_in.read_text(encoding=_ENCODING))
     manifest_updated = update_manifest_deps(manifest_orig)
 
-    path_out.write_text(
-        json.dumps(manifest_updated, indent=4), encoding=_ENCODING
-    )
+    path_out.write_text(json.dumps(manifest_updated, indent=4), encoding=_ENCODING)
 
 
 if __name__ == "__main__":
