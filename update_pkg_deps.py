@@ -6,7 +6,6 @@ import argparse
 import concurrent.futures
 import json
 import logging
-import time
 from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path
@@ -19,6 +18,7 @@ logger = logging.getLogger(__name__)
 _URL_API_EXP = "https://thunderstore.io/api/experimental"
 _DEFAULT_MAX_WORKERS = 5  # Conservative value to avoid rate limiting
 _TIMEOUT = 10  # Seconds
+_ENCODING = "utf-8"
 
 
 @dataclass
@@ -51,7 +51,7 @@ class Package:
         pkg = Package(
             namespace=self.namespace, name=self.name, version=latest["version_number"]
         )
-        logger.debug(f"self={repr(self)}, latest={repr(pkg)}")
+        logger.debug("self=%s, latest=%s", repr(self), repr(pkg))
 
         return pkg
 
@@ -108,12 +108,14 @@ def main():
     path_in = Path(args.input)
     path_out = Path(args.output)
 
-    logger.debug(f"CLI args={args}")
+    logger.debug("CLI args=%s", args)
 
-    manifest_orig = json.loads(path_in.read_text())
+    manifest_orig = json.loads(path_in.read_text(encoding=_ENCODING))
     manifest_updated = update_manifest_deps(manifest_orig)
 
-    path_out.write_text(json.dumps(manifest_updated, indent=4))
+    path_out.write_text(
+        json.dumps(manifest_updated, indent=4), encoding=_ENCODING
+    )
 
 
 if __name__ == "__main__":
