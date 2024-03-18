@@ -12,13 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
       - name: Install toolchain
         run: pip install ./update_pkg_deps
 
       - name: Update modpack dependencies
-        run: update_pkg_deps --input manifest.json.j2 --output manifest.json.j2 --verbose
+        run: |
+          cat manifest.json.j2
+          update_pkg_deps --input manifest.json.j2 --output manifest.json.j2 --verbose
+          cat manifest.json.j2
 
       - name: Calculate diff
         id: git-diff
