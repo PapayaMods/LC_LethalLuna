@@ -1,4 +1,5 @@
 """
+Updates dependencies to the latest version for the provided package manifest.
 """
 
 import argparse
