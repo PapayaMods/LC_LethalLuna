@@ -2,14 +2,15 @@ name: Python lint and fix
 
 on:
   push:
-    # paths:
-    #   - "update_pkg_deps/**"
+    paths:
+      - "update_pkg_deps/**"
 
 jobs:
   lint_and_fix:
-    runs-on: python:3.12
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v2
       - uses: chartboost/ruff-action@v1
         with:
           args: --check .
