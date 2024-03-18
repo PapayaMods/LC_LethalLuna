@@ -2,8 +2,8 @@ name: Python lint and fix
 
 on:
   push:
-    paths:
-      - "update_pkg_deps/**"
+    # paths:
+    #   - "update_pkg_deps/**"
 
 jobs:
   lint_and_fix:
