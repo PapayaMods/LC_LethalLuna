@@ -1,16 +1,17 @@
 """
 """
 
-import requests
-from dataclasses import dataclass
 import argparse
-from pathlib import Path
-import json
-from typing import Mapping, Sequence, Self
 import concurrent.futures
-from copy import deepcopy
+import json
 import logging
 import time
+from copy import deepcopy
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Mapping, Self, Sequence
+
+import requests
 
 logger = logging.getLogger(__name__)
 
