@@ -10,12 +10,13 @@ from typing import Mapping, Sequence, Self
 import concurrent.futures
 from copy import deepcopy
 import logging
-
+import time
 
 logger = logging.getLogger(__name__)
 
 _URL_API_EXP = "https://thunderstore.io/api/experimental"
 _DEFAULT_MAX_WORKERS = 5  # Conservative value to avoid rate limiting
+_TIMEOUT = 10  # Seconds
 
 
 @dataclass
@@ -38,9 +39,9 @@ class Package:
     def __str__(self) -> str:
         return f"{self.namespace}-{self.name}-{self.version}"
 
-    def get_latest(self) -> Self:
+    def get_latest(self, timeout: float = _TIMEOUT) -> Self:
         url = f"{_URL_API_EXP}/package/{self.namespace}/{self.name}/"
-        response = requests.get(url)
+        response = requests.get(url, timeout=timeout)
         response.raise_for_status()
 
         latest = response.json()["latest"]
