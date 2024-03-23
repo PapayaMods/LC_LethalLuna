@@ -26,7 +26,6 @@ jobs:
           output_file: ${{ env.BUILD_SRC }}/manifest.json
           strict: true
           variables: |
-            name=${{ github.event.repository.name }}
             version_number=${{ github.ref_name }}
             website_url=${{ github.server_url }}/${{ github.repository }}
 
