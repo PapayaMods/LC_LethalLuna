@@ -27,7 +27,6 @@ jobs:
         uses: GreenTF/upload-thunderstore-package@v4.3
         with:
           namespace: PapayaMods # the thunderstore 'team' to publish under
-          description: Just a Lethal Company modpack
           file: ${{ env.BUILD_PKG }}
           token: ${{ secrets.THUNDERSTORE_PROD_API_TOKEN }}
           name: ${{ github.event.repository.name }} # the name of the package
