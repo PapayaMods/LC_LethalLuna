@@ -19,7 +19,7 @@ jobs:
       - name: Create build directory structure
         run: mkdir -p ${{ env.BUILD_SRC }}
 
-      - name: Template manifest.json
+      - name: Render manifest.json
         uses: cuchi/jinja2-action@v1.2.2
         with:
           template: manifest.json.j2
@@ -28,6 +28,9 @@ jobs:
           variables: |
             version_number=${{ github.ref_name }}
             website_url=${{ github.server_url }}/${{ github.repository }}
+
+      - name: Print rendered manifest.json
+        run: cat ${{ env.BUILD_SRC }}/manifest.json
 
       - name: Copy sources
         run: |
