@@ -125,7 +125,7 @@ def main():
     manifest_updated = update_manifest_deps(manifest_orig, max_workers=args.max_workers)
 
     logger.info("Writing package manifest: %s", path_out)
-    path_out.write_text(json.dumps(manifest_updated, indent=4), encoding=_ENCODING)
+    path_out.write_text(json.dumps(manifest_updated, indent=2), encoding=_ENCODING)
 
 
 if __name__ == "__main__":
