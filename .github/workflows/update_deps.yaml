@@ -2,8 +2,7 @@ name: Update package dependencies
 
 on:
   schedule:
-    # Game session usually starts at 20
-    - cron: '0 18 * * *'
+    - cron: '0 8 * * *'
   workflow_dispatch:
 
 permissions:
