@@ -19,15 +19,16 @@ jobs:
       - name: Create build directory structure
         run: mkdir -p ${{ env.BUILD_SRC }}
 
-      - name: Render manifest.json
-        uses: cuchi/jinja2-action@v1.2.2
+      - name: Render Jinja2 Templates
+        uses: lexty/jinja2-renderer@v1
         with:
-          template: manifest.json.j2
-          output_file: ${{ env.BUILD_SRC }}/manifest.json
-          strict: true
+          template_path: manifest.json.j2
+          output_path: ${{ env.BUILD_SRC }}/manifest.json
           variables: |
-            version_number=${{ github.ref_name }}
-            website_url=${{ github.server_url }}/${{ github.repository }}
+            {
+                "version_number": "${{ github.ref_name }}",
+                "website_url": "${{ github.server_url }}/${{ github.repository }}"
+            }
 
       - name: Print rendered manifest.json
         run: cat ${{ env.BUILD_SRC }}/manifest.json
