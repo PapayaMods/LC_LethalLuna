@@ -12,7 +12,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 _URL_API_EXP = "https://thunderstore.io/api/experimental"
-_DEFAULT_MAX_WORKERS = 5  # Conservative value to avoid rate limiting
+_DEFAULT_MAX_WORKERS = 1  # Conservative value to avoid rate limiting
 _TIMEOUT = 10  # Seconds
 _ENCODING = "utf-8"
 
